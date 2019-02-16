@@ -1,7 +1,6 @@
 ## EmojiText
 
-<div align=center>！(https://raw.githubusercontent.com/datongworld/EmojiText/master/Assets/EmojiText/screenshot.png)
-</div>
+![](https://raw.githubusercontent.com/datongworld/EmojiText/master/Assets/EmojiText/screenshot.png)
 
 
 
