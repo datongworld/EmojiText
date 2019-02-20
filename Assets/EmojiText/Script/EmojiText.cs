@@ -79,6 +79,8 @@ public class EmojiText : Text {
         int count = emojis.Count;
         if (count > 0 && verts.Count > 0)
         {
+            // 实际显示的数量
+            int c = 0 ;
             for (int i = 0; i < count; i++)
             {
                 int index = emojis[i].posIndex;
@@ -97,17 +99,20 @@ public class EmojiText : Text {
                 RectTransform rt = image.rectTransform;
                 rt.gameObject.SetActive(true);
                 rt.sizeDelta = new Vector2(fontSize, fontSize);
-                float x = verts[index * 6].position.x + fontSize / 2;
-                float y = verts[index * 6].position.y + fontSize / 4;
-                rt.localPosition = new Vector3(x, y, 0f);
-                if (emojiData != null)
-                {
-                    //image.texture = emojiData.getEmojiImg(emojis[i].des);
-                    image.sprite = emojiData.getEmojiSprite(emojis[i].des);
+                if(index * 6 < verts.Count){
+                    float x = verts[index * 6].position.x + fontSize / 2;
+                    float y = verts[index * 6].position.y + fontSize / 4;
+                    rt.localPosition = new Vector3(x, y, 0f);
+                    if (emojiData != null)
+                    {
+                        //image.texture = emojiData.getEmojiImg(emojis[i].des);
+                        image.sprite = emojiData.getEmojiSprite(emojis[i].des);
+                    }
+                    c += 1 ;
                 }
-
+                
             }
-            for (int i = count; i < transform.childCount; i++)
+            for (int i = c; i < transform.childCount; i++)
             {
                 Transform ch = transform.GetChild(i);
                 ch.gameObject.SetActive(false);
