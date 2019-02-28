@@ -84,17 +84,18 @@ public class EmojiText : Text {
             for (int i = 0; i < count; i++)
             {
                 int index = emojis[i].posIndex;
-                Image image = null;
+                //Image image = null;
+                RawImage image = null;
                 if (i >= transform.childCount)                                  // if emoji gameobject is not enough
                 {
                     GameObject go = new GameObject("emoji");
-                    image = go.AddComponent<Image>();
+                    image = go.AddComponent<RawImage>();
                     go.transform.SetParent(transform);
                     go.transform.localScale = Vector3.one;
                 }
                 else
                 {
-                    image = transform.GetChild(i).GetComponent<Image>();
+                    image = transform.GetChild(i).GetComponent<RawImage>();
                 }
                 RectTransform rt = image.rectTransform;
                 rt.gameObject.SetActive(true);
@@ -106,7 +107,7 @@ public class EmojiText : Text {
                     if (emojiData != null)
                     {
                         //image.texture = emojiData.getEmojiImg(emojis[i].des);
-                        image.sprite = emojiData.getEmojiSprite(emojis[i].des);
+                        image.texture = emojiData.getEmojiTexture(emojis[i].des);
                     }
                     c += 1 ;
                 }

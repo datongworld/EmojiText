@@ -12,7 +12,9 @@
 
 - 还未进行测试微信穿过来的名称
 
-哪位兄弟有高清Emoji纹理资源可共享下
+使用 [Emojione 4.5](https://github.com/emojione/emojione-assets) 的高清Icon
+
+高清Icon用 unicode 转 unified 编码名称获取icon图片
 
 
 

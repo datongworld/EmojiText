@@ -549,7 +549,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9003ec1b4ab9370419f330e5d326eea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  emojiSprites: []
+  emojiSize: 1
 --- !u!4 &2139535600
 Transform:
   m_ObjectHideFlags: 0

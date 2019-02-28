@@ -4,72 +4,61 @@
 */
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using System.IO;
+using System.Text;
 
 public class EmojiData : MonoBehaviour {
 
-    
-
-
-
-
-    /// <summary>
-    /// 表情内容
-    /// </summary>
-    public List<EmojiSprite> emojiSprites = new List<EmojiSprite>();
-
-    
-
-    /// <summary>
-    /// 获取图片
-    /// </summary>
-    /// <param name="unicode"></param>
-    /// <returns></returns>
-    public Sprite getEmojiSprite(string unicode)
+    public enum EmojiSize
     {
-        string z = "";
-        for (int x = 1; x < unicode.Length; x++)
-        {
-            z += unicode[x];
-        }
-        Sprite sprite = GetEmojiSpriteForList(z);
-        if (sprite == null)
-        {
-            sprite = Resources.Load<Sprite>("Icon/SBUnicode/" + z);
-            EmojiSprite eSprite = new EmojiSprite(z, sprite);
-            emojiSprites.Add(eSprite);
-        }
-        return sprite;
+        Image32=0,Image64=1,Image128=2
     }
 
-    /// <summary>
-    /// 从列表中获取
-    /// </summary>
-    /// <param name="unicode"></param>
-    /// <returns></returns>
-    private Sprite GetEmojiSpriteForList(string unicode)
+    public EmojiSize emojiSize = EmojiSize.Image64 ;
+
+    private string[] imageSize = new string[3]{"32/","64/","128/"} ;
+    private EmojiCode emojiCode ;
+
+    private List<EmojiTexture> emojiTexture = new List<EmojiTexture>();
+
+
+    void Awake()
     {
-        for (int i = 0; i < emojiSprites.Count; i++)
+        TextAsset asset = (TextAsset)Resources.Load("emoji");
+		if(asset != null){
+			emojiCode = JsonUtility.FromJson<EmojiCode>(asset.text);
+		}
+    }
+
+    public Texture2D getEmojiTexture(string unicode){
+        Texture2D tex = null ;
+        for (int i = 0; i < emojiTexture.Count; i++)
         {
-            if (emojiSprites[i].unicode.Equals(unicode))
+            if (emojiTexture[i].unicode.Equals(unicode))
             {
-                return emojiSprites[i].sprite;
+                tex = emojiTexture[i].texture;
+                break ;
             }
         }
-        return null;
+        if(tex == null){
+            unicode = emojiCode.GetUnified4SoftBankUnicode(unicode);
+            tex = Resources.Load<Texture2D>("Icon/Unified/Emojione/" +imageSize[(int)emojiSize] + unicode);
+        }
+        return tex ;
     }
+    
 
-  
 
     [System.Serializable]
-    public struct EmojiSprite
-    {
+    public struct EmojiTexture{
         public string unicode;
-        public Sprite sprite;
+        public Texture2D texture;
 
-        public EmojiSprite(string u, Sprite s)
+        public EmojiTexture(string u, Texture2D t)
         {
             this.unicode = u;
-            this.sprite = s;
+            this.texture = t;
         }
     }
 
